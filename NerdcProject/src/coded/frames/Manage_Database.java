@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package coded.frames;
 
 import java.awt.event.KeyEvent;
@@ -35,6 +34,8 @@ public class Manage_Database extends javax.swing.JFrame {
         Edit_employee = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Manage Employees");
+        setLocationByPlatform(true);
 
         add_employee.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         add_employee.setText("Add Employee");
@@ -103,29 +104,36 @@ public class Manage_Database extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void add_employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_employeeActionPerformed
+        dispose();
         new Add_Employee().setVisible(true);
     }//GEN-LAST:event_add_employeeActionPerformed
 
     private void delete_employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_employeeActionPerformed
-         new Delete_Employee().setVisible(true);
+        dispose();
+        new Delete_Employee().setVisible(true);
     }//GEN-LAST:event_delete_employeeActionPerformed
 
     private void add_employeeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add_employeeKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             add_employee.doClick();
+        }
     }//GEN-LAST:event_add_employeeKeyPressed
 
     private void delete_employeeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_delete_employeeKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             add_employee.doClick();
+        }
     }//GEN-LAST:event_delete_employeeKeyPressed
 
     private void Edit_employeeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Edit_employeeKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             add_employee.doClick();
+        }
     }//GEN-LAST:event_Edit_employeeKeyPressed
 
     private void Edit_employeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit_employeeActionPerformed
+
+        dispose();
         new Edit_Employee().setVisible(true);
     }//GEN-LAST:event_Edit_employeeActionPerformed
 

@@ -1,6 +1,6 @@
 package coded.others;
 
-import coded.others.MySQLConnection;
+import coded.others.MySQLConnectionClass;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -129,8 +129,8 @@ public class ExcelClass {
             XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet worksheet;
 
-            MySQLConnection.getInstance().updateStatement("create database if not exists " + database);
-            MySQLConnection.getInstance().updateStatement("use " + database);
+            MySQLConnectionClass.getInstance().updateStatement("create database if not exists " + database);
+            MySQLConnectionClass.getInstance().updateStatement("use " + database);
             
             //MySQLConnection.getInstance().updateStatement("create database if not exists " + input.split("\\.")[0].replaceAll("\\s", "_"));
            // MySQLConnection.getInstance().updateStatement("use " + input.split("\\.")[0].replaceAll("\\s", "_"));
@@ -184,13 +184,13 @@ public class ExcelClass {
                     if (first == true) {
                         createD = createD.substring(0, createD.length() - 1) + ")";
                         //System.out.println("\n" + createD);
-                        MySQLConnection.getInstance().updateStatement(createD);
+                        MySQLConnectionClass.getInstance().updateStatement(createD);
                         insert = "insert into " + workbook.getSheetName(index - 1).replaceAll("[/\\\\\\s\\.]", "_") + " values ('";
 
                     } else {
                         insert = insert.substring(0, insert.length() - 4) + ")";
                         // System.out.println(insert);
-                        MySQLConnection.getInstance().updateStatement(insert);
+                        MySQLConnectionClass.getInstance().updateStatement(insert);
                         insert = "insert into " + workbook.getSheetName(index - 1).replaceAll("[/\\\\\\s\\.]", "_") + " values ('";
                     }
 

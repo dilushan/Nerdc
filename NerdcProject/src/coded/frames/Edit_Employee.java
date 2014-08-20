@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package coded.frames;
 
+import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,9 +44,11 @@ public class Edit_Employee extends javax.swing.JFrame {
         designation_Label = new javax.swing.JLabel();
         designation_TextField = new javax.swing.JTextField();
         department_Label = new javax.swing.JLabel();
-        depatment_TextField = new javax.swing.JTextField();
+        department_TextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edit employee");
+        setLocationByPlatform(true);
 
         submit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         submit.setText("SUBMIT");
@@ -134,7 +138,7 @@ public class Edit_Employee extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(department_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(depatment_TextField))))
+                            .addComponent(department_TextField))))
                 .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
@@ -163,7 +167,7 @@ public class Edit_Employee extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(department_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(depatment_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(department_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(submit)
                 .addGap(21, 21, 21))
@@ -175,33 +179,47 @@ public class Edit_Employee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void name_TextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_name_TextFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submit.doClick();
+        }
     }//GEN-LAST:event_name_TextFieldKeyPressed
 
     private void ID_TextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ID_TextFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submit.doClick();
+        }
     }//GEN-LAST:event_ID_TextFieldKeyPressed
 
     private void salary_TextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_salary_TextFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submit.doClick();
+        }
     }//GEN-LAST:event_salary_TextFieldKeyPressed
 
     private void cat_TextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cat_TextFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
-            submit.doClick();        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            submit.doClick();
+        }
     }//GEN-LAST:event_cat_TextFieldKeyPressed
 
     private void submitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_submitKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submit.doClick();
+        }
     }//GEN-LAST:event_submitKeyPressed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        // need to change the database
-        dispose();
+        if (!ID_TextField.getText().equalsIgnoreCase("")) {
+            try {
+                MySQLConnectionClass.getInstance().updateStatement("UPDATE employee SET name=\""+name_TextField.getText()+"\", base_salary=\""+salary_TextField.getText()+"\", cat=\""+cat_TextField.getText()+"\", designation=\""+designation_TextField.getText()+"\",department=\""+department_TextField.getText()+"\" WHERE eid=\""+ID_TextField.getText()+"\"");
+            } catch (SQLException e) {
+              JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
+            }
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "ID should not be empty", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_submitActionPerformed
 
     /**
@@ -220,13 +238,7 @@ public class Edit_Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Edit_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Edit_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Edit_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Edit_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -244,7 +256,7 @@ public class Edit_Employee extends javax.swing.JFrame {
     private javax.swing.JLabel cat_Label;
     private javax.swing.JTextField cat_TextField;
     private javax.swing.JLabel department_Label;
-    private javax.swing.JTextField depatment_TextField;
+    private javax.swing.JTextField department_TextField;
     private javax.swing.JLabel designation_Label;
     private javax.swing.JTextField designation_TextField;
     private javax.swing.JLabel iD_Label;

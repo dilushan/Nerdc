@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package coded.frames;
 
-import coded.others.MySQLConnection;
+import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -48,6 +47,8 @@ public class Add_Employee extends javax.swing.JFrame {
         depatment_TextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add employee");
+        setLocationByPlatform(true);
 
         submit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         submit.setText("SUBMIT");
@@ -163,15 +164,15 @@ public class Add_Employee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void name_TextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_name_TextFieldKeyPressed
-       
+
     }//GEN-LAST:event_name_TextFieldKeyPressed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         //code for change database
-                try {
+        try {
             //error need to fix in auto increment
-            MySQLConnection.getInstance().updateStatement("create table if not exists Employee(empno INT NOT NULL AUTO_INCREMENT, name VARCHAR(100),eid INT, base_salary FLOAT, cat VARCHAR(15), designation VARCHAR(63),department VARCHAR(63), PRIMARY KEY (empno),unique(eid))");
-            MySQLConnection.getInstance().updateStatement("insert into Employee (name,eid, base_salary, cat, designation,department) values ('"
+            MySQLConnectionClass.getInstance().updateStatement("CREATE TABLE IF NOT EXISTS employee(empno INT NOT NULL AUTO_INCREMENT, name VARCHAR(100),eid INT, base_salary FLOAT, cat VARCHAR(15), designation VARCHAR(63),department VARCHAR(63), PRIMARY KEY (empno), UNIQUE(eid))");
+            MySQLConnectionClass.getInstance().updateStatement("INSERT INTO Employee (name,eid, base_salary, cat, designation,department) VALUES ('"
                     + "" + name_TextField.getText() + "', '" + ID_TextField.getText() + "', '" + salary_TextField.getText() + "', '" + cat_TextField.getText() + "', '" + designation_TextField.getText() + "', '" + depatment_TextField.getText() + "')");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -181,8 +182,9 @@ public class Add_Employee extends javax.swing.JFrame {
     }//GEN-LAST:event_submitActionPerformed
 
     private void submitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_submitKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submit.doClick();
+        }
     }//GEN-LAST:event_submitKeyPressed
 
     /**
@@ -201,13 +203,7 @@ public class Add_Employee extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Add_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Add_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Add_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Add_Employee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

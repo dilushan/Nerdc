@@ -209,7 +209,6 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void About_NERDCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_About_NERDCActionPerformed
-        dispose();
         new About_NERDC().setVisible(true);
     }//GEN-LAST:event_About_NERDCActionPerformed
 
@@ -218,12 +217,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenNewWindowActionPerformed
 
     private void ContactUSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactUSActionPerformed
-        dispose();
         new Contact_Us().setVisible(true);
     }//GEN-LAST:event_ContactUSActionPerformed
 
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
-        dispose();
         new Save().setVisible(true);
     }//GEN-LAST:event_SaveActionPerformed
 
@@ -253,7 +250,6 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
         new ImportExportGUI().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

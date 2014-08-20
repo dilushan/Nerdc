@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
-public class MySQLConnection {
+public class MySQLConnectionClass {
 
-    public static MySQLConnection SQLConnection = null;
+    public static MySQLConnectionClass SQLConnection = null;
     private Connection con;
     private Statement statement;
 
-    private MySQLConnection() {
+    private MySQLConnectionClass() {
         try {
             Class.forName("com.mysql.jdbc.Driver");                                                                             // this will load the MySQL driver, each DB has its own driver
             // setup the connection with the DB.
@@ -28,9 +28,9 @@ public class MySQLConnection {
         }
     }
 
-    public static synchronized MySQLConnection getInstance() {
+    public static synchronized MySQLConnectionClass getInstance() {
         if (SQLConnection == null) {
-            SQLConnection = new MySQLConnection();
+            SQLConnection = new MySQLConnectionClass();
         }
         return SQLConnection;
     }
