@@ -87,7 +87,7 @@ public class Create_Project extends javax.swing.JFrame {
 
         Add_Employees_to_Project add_employees;
         add_employees = new Add_Employees_to_Project(jTextField1.getText(), jComboBox1.getSelectedItem().toString());
-        this.dispose();
+        dispose();
         add_employees.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
