@@ -75,7 +75,7 @@ String project_name,department;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 dispose();
-new Add_Employees(null, null);
+new Add_Employees_to_Project(null, null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

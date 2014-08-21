@@ -32,6 +32,7 @@ public class WelcomeUpdate extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome NERDC");
+        setLocationByPlatform(true);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 153));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N

@@ -7,6 +7,7 @@ package coded.frames;
 
 import coded.others.ExcelClass;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -52,8 +53,9 @@ public class ImportExportGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Import or Export Excel  Sheet");
+        setLocationByPlatform(true);
         setResizable(false);
 
         jButton1.setText("Import");
@@ -220,15 +222,21 @@ public class ImportExportGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(!jTextField1.getText().equalsIgnoreCase("")){
         jLabel4.setText("");
         new ExcelClass().Import(jTextField1.getText(), jFileChooser1.getSelectedFile().getName().split("\\.")[0].replaceAll("\\s", "_"));
         jLabel4.setText("Done");
+        }else
+            JOptionPane.showMessageDialog(this, "Please input path and name", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         if(!jTextField2.getText().equalsIgnoreCase("")&&!jTextField3.getText().equalsIgnoreCase("")){
         jLabel5.setText("");
         new ExcelClass().export(jTextField3.getText(), jTextField2.getText() + "/" + jTextField3.getText() + ".xlsx");
         jLabel5.setText("Done");
+        }else
+            JOptionPane.showMessageDialog(this, "Please input path and name", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

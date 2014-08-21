@@ -6,6 +6,7 @@
 package coded.frames;
 
 import coded.others.MySQLConnectionClass;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,22 @@ public class Delete_Employee extends javax.swing.JFrame {
      */
     public Delete_Employee() {
         initComponents();
-    }
+        String[] name=new String[255];
+        int i=0;
+        try {
+        ResultSet rs=MySQLConnectionClass.getInstance().queryStatement("SELECT name FROM employee");
+        while(rs.next()){
+            name_list.addItem(rs.getString("name"));
+        }
+        rs=MySQLConnectionClass.getInstance().queryStatement("SELECT eid FROM employee");
+        while(rs.next()){
+            num_list.addItem(rs.getString("eid"));
+        }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,12 +48,12 @@ public class Delete_Employee extends javax.swing.JFrame {
     private void initComponents() {
 
         search_by_name = new javax.swing.JLabel();
-        list = new javax.swing.JComboBox();
-        name_TextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         search_by_number = new javax.swing.JLabel();
-        num_list = new javax.swing.JComboBox();
+        name_TextField = new javax.swing.JTextField();
         num_TextField = new javax.swing.JTextField();
+        name_list = new javax.swing.JComboBox();
+        num_list = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -47,10 +63,18 @@ public class Delete_Employee extends javax.swing.JFrame {
         search_by_name.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         search_by_name.setText("Search by name");
 
-        list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        list.addActionListener(new java.awt.event.ActionListener() {
+        search_by_number.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        search_by_number.setText("Search by ID");
+
+        name_list.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listActionPerformed(evt);
+                name_listActionPerformed(evt);
+            }
+        });
+
+        num_list.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                num_listActionPerformed(evt);
             }
         });
 
@@ -59,16 +83,6 @@ public class Delete_Employee extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        search_by_number.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        search_by_number.setText("Search by ID");
-
-        num_list.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        num_list.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                num_listActionPerformed(evt);
             }
         });
 
@@ -96,18 +110,15 @@ public class Delete_Employee extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(name_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(name_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(num_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(num_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(search_by_number)
-                                    .addComponent(search_by_name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(search_by_number)
+                            .addComponent(search_by_name, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -117,7 +128,7 @@ public class Delete_Employee extends javax.swing.JFrame {
                 .addComponent(search_by_name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(name_list, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(name_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
@@ -145,16 +156,16 @@ public class Delete_Employee extends javax.swing.JFrame {
             try {
                 MySQLConnectionClass.getInstance().updateStatement("DELETE FROM employee WHERE name = \"" + name_TextField.getText() + "\" limit 1");
                 dispose();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
-        name_TextField.setText(list.getSelectedItem().toString());
-    }//GEN-LAST:event_listActionPerformed
+    private void name_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_name_listActionPerformed
+        name_TextField.setText(name_list.getSelectedItem().toString());
+    }//GEN-LAST:event_name_listActionPerformed
 
     private void num_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num_listActionPerformed
         num_TextField.setText(num_list.getSelectedItem().toString());
@@ -211,8 +222,8 @@ public class Delete_Employee extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox list;
     private javax.swing.JTextField name_TextField;
+    private javax.swing.JComboBox name_list;
     private javax.swing.JTextField num_TextField;
     private javax.swing.JComboBox num_list;
     private javax.swing.JLabel search_by_name;

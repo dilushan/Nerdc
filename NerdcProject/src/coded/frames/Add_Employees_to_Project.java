@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Dula
  */
-public class Add_Employees extends javax.swing.JFrame {
+public class Add_Employees_to_Project extends javax.swing.JFrame {
     
     String projectName,department;
 
@@ -27,7 +27,7 @@ public class Add_Employees extends javax.swing.JFrame {
      * @param projectName
      * @param departmeent
      */
-    public Add_Employees(String projectName, String departmeent) {
+    public Add_Employees_to_Project(String projectName, String departmeent) {
         this.projectName=projectName;
         this.department=departmeent;
 
@@ -221,6 +221,7 @@ public class Add_Employees extends javax.swing.JFrame {
         setTitle(getProjectName());
         setBackground(java.awt.Color.gray);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setLocationByPlatform(true);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -440,7 +441,7 @@ public class Add_Employees extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Add_Employees.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Employees_to_Project.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -448,7 +449,7 @@ public class Add_Employees extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Add_Employees("project1","CS").setVisible(true);
+                new Add_Employees_to_Project("project1","CS").setVisible(true);
             }
         }); 
     }
