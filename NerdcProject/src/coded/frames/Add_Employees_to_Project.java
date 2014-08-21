@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package coded.frames;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import coded.others.MySQLConnectionClass;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -19,180 +17,144 @@ import javax.swing.table.DefaultTableModel;
  * @author Dula
  */
 public class Add_Employees_to_Project extends javax.swing.JFrame {
-    
-    String projectName,department;
+
+    String projectName, department;
 
     /**
      * Creates new form Fill_data
+     *
      * @param projectName
      * @param departmeent
      */
     public Add_Employees_to_Project(String projectName, String departmeent) {
-        this.projectName=projectName;
-        this.department=departmeent;
+        this.projectName = projectName;
+        this.department = departmeent;
 
-        
-        initComponents();       
-        sql_to_table( "nerdc" );//the db name has to be given
-        
+        initComponents();
+        sql_to_table("nerdc");//the db name has to be given
+
     }
 
-
-    /*******************             SQL part begins here
-     * @param database***************/
-   
+    /**
+     * ***************** SQL part begins here
+     *
+     * @param database**************
+     */
     public final void sql_to_table(String database) {
-        
-        setTable1(database, jTable1,"employee");
-        setTable2("coded", jTable2,projectName+"_"+department);//show table 2 if it is already existing in the database
+
+        setTable1(database, jTable1, "employee");
+        setTable2(database, jTable2, projectName + "_" + department);//show table 2 if it is already existing in the database
     }
- 
-    private void setTable1(String database, JTable jTable, String existing_table){
-        
-        Connection con;
-        //PreparedStatement preparedStatement;
+
+    private void setTable1(String database, JTable jTable, String existing_table) {
+
         ResultSet resultSet;
-        String s[]=new String[2];//for hold the data in sql row
+        String s[] = new String[2];//for hold the data in sql row
         DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
 
         try {
-            
-                Class.forName("com.mysql.jdbc.Driver");                                                                             // this will load the MySQL driver, each DB has its own driver
-                // setup the connection with the DB.
-                con = DriverManager.getConnection("jdbc:mysql://localhost/" + database+ "?" + "user=root");
-                //result set filter by name annd no
-                //sorted by no in ASCENDING order
-                resultSet = con.createStatement().executeQuery("SELECT eid,name FROM "+existing_table+" ORDER BY eid");
-                
-                while (resultSet.next()) {
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT eid,name FROM " + existing_table + " ORDER BY eid");
 
-                    s[0] = resultSet.getString("eid"); //get the column called no
-                    s[1] = resultSet.getString("name"); //get the column called name
+            while (resultSet.next()) {
 
-                    mod.addRow(s);
-                    jTable.setModel(mod);
-            }       
-        } catch (SQLException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE); 
-        }       
-    }
-    
-    private void setTable2(String database, JTable jTable, String existing_table) {
-        
-        Connection con;
-        //PreparedStatement preparedStatement;
-        ResultSet resultSet;
-        String s[]=new String[3];//for hold the data in sql row
-        DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
+                s[0] = resultSet.getString("eid"); //get the column called no
+                s[1] = resultSet.getString("name"); //get the column called name
 
-        try {
-            
-                Class.forName("com.mysql.jdbc.Driver");                                                                             // this will load the MySQL driver, each DB has its own driver
-                // setup the connection with the DB.
-                con = DriverManager.getConnection("jdbc:mysql://localhost/" + database+ "?" + "user=root");
-                //result set filter by name annd no
-                //sorted by no in ASCENDING order
-                resultSet = con.createStatement().executeQuery("SELECT emp_code,name,direct_indirect FROM "+existing_table+" ORDER BY emp_code");
-                JOptionPane.showMessageDialog(rootPane, "\t Project already exists!\nYou will Navigate to the Manage Employee window");
-                this.dispose();
-               /*
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                this is not disposing
-                
-                
-                
-                
-                */ System.err.println("what is happening");
-                new intermediate(projectName,department).setVisible(true);
-                while (resultSet.next()) {
-
-                    s[0] = resultSet.getString("emp_code"); //get the column called no
-                    s[1] = resultSet.getString("name"); //get the column called name
-                    s[2] = resultSet.getString("direct_indirect");
-
-                    mod.addRow(s);
-                    jTable.setModel(mod);
-            }       
-        } catch (SQLException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(rootPane, "New database created!\n \t no existing in the same name");
-        }   
-    }
-    
-    
-    /*********** export table2 to NEW SQL DB  ****************/
-    
-    /****NOT completed*********/
-    
-    private void table_to_SQL(String database) {
-        
-    Connection con;
-    ResultSet resultSet;
-    String s[]=new String[3];//for hold the data in sql row
-    DefaultTableModel mod = (DefaultTableModel) jTable2.getModel();//get the existing table data
-    String query;
-    String newTableName = (projectName+"_"+department);//design the new table name
-
-        try {
-            
-                Class.forName("com.mysql.jdbc.Driver");                                                                             // this will load the MySQL driver, each DB has its own driver
-                // setup the connection with the DB.
-                con = DriverManager.getConnection("jdbc:mysql://localhost/" + database+ "?" + "user=root");
-
-                //create a  new table by newTableName in the db only if not exists
-                //then wipe all the data in the table
-                
-                query = "CREATE TABLE IF NOT EXISTS "+newTableName+"("
-                        + "emp_code varchar(10),"
-                        + "name varchar(30),"
-                        + "direct_indirect varchar(10)"
-                        + ")" ;
-                
-                con.createStatement().execute(query);//creating table in db
-                //wipe data
-                con.createStatement().execute("TRUNCATE TABLE "+newTableName);
-                
-                //for each row in the table
-                for (int i = 0; i < jTable2.getRowCount(); i++) {
-                    
-                    //get the rows data
-                    s[0]=mod.getValueAt(i, 0).toString();
-                    s[1]=mod.getValueAt(i, 1).toString(); 
-                    s[2]=mod.getValueAt(i, 2).toString(); 
-
-                    //prepare the query by using the values in the table
-                    query="INSERT INTO  " +newTableName+ "(emp_code, name ,direct_indirect)" + " VALUES "
-                            + "( '" +s[0]+ "','" +s[1]+  "','"  +s[2]+ "')";
-  
-                    con.createStatement().execute(query);//update the table in sql named newProjectName
-
-                }
-                //show the parent frame
-                this.dispose();
-                new Create_Project().setVisible(true);
-                JOptionPane.showMessageDialog(null, "All the Employees in the table are added Succefully");
-
-        } catch (SQLException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);           
+                mod.addRow(s);
+                jTable.setModel(mod);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
         }
-   
     }
 
-    /******************* SQL part ends her
-     * @return e********************/
-    
-    public String getProjectName(){
-        //this is title in the frame
-        return "New Project : "+ (this.projectName+"_"+this.department).toUpperCase();
+    private void setTable2(String database, JTable jTable, String existing_table) {
+
+        ResultSet resultSet;
+        String s[] = new String[3];//for hold the data in sql row
+        DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
+
+        try {
+
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT emp_code,name,direct_indirect FROM " + existing_table + " ORDER BY emp_code");
+            JOptionPane.showMessageDialog(rootPane, "\t Project already exists!\nYou will Navigate to the Manage Employee window");
+            this.dispose();
+            /*
+               
+             this is not disposing
+             */
+            new intermediate(projectName, department).setVisible(true);
+            while (resultSet.next()) {
+
+                s[0] = resultSet.getString("emp_code"); //get the column called no
+                s[1] = resultSet.getString("name"); //get the column called name
+                s[2] = resultSet.getString("direct_indirect");
+
+                mod.addRow(s);
+                jTable.setModel(mod);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "New database created!\n \t no existing in the same name");
+        }
     }
-   
+
+    /**
+     * ********* export table2 to NEW SQL DB ***************
+     */
+    /**
+     * **NOT completed********
+     */
+    private void table_to_SQL(String database) {
+
+        ResultSet resultSet;
+        String s[] = new String[3];//for hold the data in sql row
+        DefaultTableModel mod = (DefaultTableModel) jTable2.getModel();//get the existing table data
+        String query;
+        String newTableName = (projectName + "_" + department);//design the new table name
+
+        try {
+            query = "CREATE TABLE IF NOT EXISTS " + newTableName + "(" + "emp_code varchar(10)," + "name varchar(30)," + "direct_indirect varchar(10)" + ")";
+
+           MySQLConnectionClass.getInstance().updateStatement(query);//creating table in db
+            //wipe data
+           MySQLConnectionClass.getInstance().updateStatement("TRUNCATE TABLE " + newTableName);
+
+            //for each row in the table
+            for (int i = 0; i < jTable2.getRowCount(); i++) {
+
+                //get the rows data
+                s[0] = mod.getValueAt(i, 0).toString();
+                s[1] = mod.getValueAt(i, 1).toString();
+                s[2] = mod.getValueAt(i, 2).toString();
+
+                //prepare the query by using the values in the table
+                query = "INSERT INTO  " + newTableName + "(emp_code, name ,direct_indirect)" + " VALUES "
+                        + "( '" + s[0] + "','" + s[1] + "','" + s[2] + "')";
+
+                MySQLConnectionClass.getInstance().updateStatement(query);//update the table in sql named newProjectName
+
+            }
+            //show the parent frame
+            this.dispose();
+            new Create_Project().setVisible(true);
+            JOptionPane.showMessageDialog(null, "All the Employees in the table are added Succefully");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    /**
+     * ***************** SQL part ends her
+     *
+     * @return e*******************
+     */
+    public String getProjectName() {
+        //this is title in the frame
+        return "New Project : " + (this.projectName + "_" + this.department).toUpperCase();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -375,53 +337,54 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        
+
         //the row selected
-        int row=jTable1.getSelectedRow();
+        int row = jTable1.getSelectedRow();
         String selected;
         //get direct / indirect
         if (jRadioButton1.isSelected()) {
-            selected= "Direct";
+            selected = "Direct";
         } else {
-            selected= "Indirect";
+            selected = "Indirect";
         }
-        
+
         //the values in the selected row
-        String s[] = {jTable1.getModel().getValueAt(row,0).toString(), jTable1.getModel().getValueAt(row,1).toString(),selected};
-        
+        String s[] = {jTable1.getModel().getValueAt(row, 0).toString(), jTable1.getModel().getValueAt(row, 1).toString(), selected};
+
         //remove the row
-        ((DefaultTableModel)jTable1.getModel()).removeRow( jTable1.getSelectedRow() );
-        
+        ((DefaultTableModel) jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+
         //add to the other table
-        ((DefaultTableModel)jTable2.getModel()).addRow(s);
-        
-        
+        ((DefaultTableModel) jTable2.getModel()).addRow(s);
+
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        
+
         /*
-        * remove from the table 2 when clicked
-        */
-        
+         * remove from the table 2 when clicked
+         */
         //the row selected
-        int row=jTable2.getSelectedRow();
-        
+        int row = jTable2.getSelectedRow();
+
         //the values in the selected row
-        String s[] = {jTable2.getModel().getValueAt(row,0).toString(), jTable2.getModel().getValueAt(row,1).toString()};
-        
+        String s[] = {jTable2.getModel().getValueAt(row, 0).toString(), jTable2.getModel().getValueAt(row, 1).toString()};
+
         //remove the row
-        ((DefaultTableModel)jTable2.getModel()).removeRow( jTable2.getSelectedRow() );
-        
+        ((DefaultTableModel) jTable2.getModel()).removeRow(jTable2.getSelectedRow());
+
         //add to the other table
-        ((DefaultTableModel)jTable1.getModel()).addRow(s);
-           
+        ((DefaultTableModel) jTable1.getModel()).addRow(s);
+
     }//GEN-LAST:event_jTable2MouseClicked
 
-    
-    /************* will have to export data in the table to new sql DB *************/
+    /**
+     * *********** will have to export data in the table to new sql DB
+     * ************
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       table_to_SQL("coded");     
+        table_to_SQL("nerdc");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -449,9 +412,9 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Add_Employees_to_Project("project1","CS").setVisible(true);
+                new Add_Employees_to_Project("project1", "CS").setVisible(true);
             }
-        }); 
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,5 +433,5 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
- 
+
 }
