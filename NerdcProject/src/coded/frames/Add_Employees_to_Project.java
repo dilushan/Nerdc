@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
      */
     public final void sql_to_table(String database) {
 
-        setTable1(database, jTable1, "employee");
+        setTable1(database, jTable1, "employee_data");
         setTable2(database, jTable2, projectName + "_" + department);//show table 2 if it is already existing in the database
     }
 
@@ -54,15 +55,8 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
 
         try {
             resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT eid,name FROM " + existing_table + " ORDER BY eid");
+            jTable1.setModel(DbUtils.resultSetToTableModel(resultSet));
 
-            while (resultSet.next()) {
-
-                s[0] = resultSet.getString("eid"); //get the column called no
-                s[1] = resultSet.getString("name"); //get the column called name
-
-                mod.addRow(s);
-                jTable.setModel(mod);
-            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -73,10 +67,12 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         ResultSet resultSet;
         String s[] = new String[3];//for hold the data in sql row
         DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
-
+        
         try {
 
-            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT emp_code,name,direct_indirect FROM " + existing_table + " ORDER BY emp_code");
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT emp_code,name,direct_indirect FROM "
+                    + "" + existing_table + " ORDER BY emp_code");
+            jTable2.setModel(DbUtils.resultSetToTableModel(resultSet));
             JOptionPane.showMessageDialog(rootPane, "\t Project already exists!\nYou will Navigate to the Manage Employee window");
             this.dispose();
             /*
@@ -84,15 +80,8 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
              this is not disposing
              */
             new intermediate(projectName, department).setVisible(true);
-            while (resultSet.next()) {
-
-                s[0] = resultSet.getString("emp_code"); //get the column called no
-                s[1] = resultSet.getString("name"); //get the column called name
-                s[2] = resultSet.getString("direct_indirect");
-
-                mod.addRow(s);
-                jTable.setModel(mod);
-            }
+            
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "New database created!\n \t no existing in the same name");
         }
@@ -100,9 +89,6 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
 
     /**
      * ********* export table2 to NEW SQL DB ***************
-     */
-    /**
-     * **NOT completed********
      */
     private void table_to_SQL(String database) {
 
