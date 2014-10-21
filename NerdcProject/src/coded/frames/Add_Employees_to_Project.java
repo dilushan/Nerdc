@@ -50,8 +50,6 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
     private void setTable1(String database, JTable jTable, String existing_table) {
 
         ResultSet resultSet;
-        String s[] = new String[2];//for hold the data in sql row
-        DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
 
         try {
             resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT eid,name FROM " + existing_table + " ORDER BY eid");
@@ -65,7 +63,6 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
     private void setTable2(String database, JTable jTable, String existing_table) {
 
         ResultSet resultSet;
-        String s[] = new String[3];//for hold the data in sql row
         DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
         
         try {
@@ -74,9 +71,8 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
                     + "" + existing_table + " ORDER BY emp_code");
             jTable2.setModel(DbUtils.resultSetToTableModel(resultSet));
             JOptionPane.showMessageDialog(rootPane, "\t Project already exists!\nYou will Navigate to the Manage Employee window");
-            this.dispose();
-            /*
-               
+            //this.dispose();
+            /* 
              this is not disposing
              */
             new intermediate(projectName, department).setVisible(true);
@@ -99,7 +95,8 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         String newTableName = (projectName + "_" + department);//design the new table name
 
         try {
-            query = "CREATE TABLE IF NOT EXISTS " + newTableName + "(" + "emp_code varchar(10)," + "name varchar(30)," + "direct_indirect varchar(10)" + ")";
+            query = "CREATE TABLE IF NOT EXISTS " + newTableName + ""
+                    + "(" + "emp_code varchar(10)," + "name varchar(30)," + "direct_indirect varchar(10)" + ")";
 
            MySQLConnectionClass.getInstance().updateStatement(query);//creating table in db
             //wipe data
