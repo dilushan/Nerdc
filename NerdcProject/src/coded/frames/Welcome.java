@@ -19,6 +19,7 @@ public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
