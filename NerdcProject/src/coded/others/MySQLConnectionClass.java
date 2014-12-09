@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
+
+/**
+ *
+ * @author Dilushan
+ */
+
 public class MySQLConnectionClass {
 
     public static MySQLConnectionClass SQLConnection = null;

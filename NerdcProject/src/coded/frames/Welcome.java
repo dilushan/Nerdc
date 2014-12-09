@@ -5,8 +5,11 @@
  */
 package coded.frames;
 
+import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
-import javax.swing.JButton;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,13 +17,8 @@ import javax.swing.JButton;
  */
 public class Welcome extends javax.swing.JFrame {
 
-    JButton log;
-
     public Welcome() {
         initComponents();
-        log = Button;
-        
-    
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -32,27 +30,17 @@ public class Welcome extends javax.swing.JFrame {
         username = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
-        Button = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome NERDC");
         setLocationByPlatform(true);
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                enter(evt);
-            }
-        });
-
+        
         jLabel1.setBackground(new java.awt.Color(255, 255, 153));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NERDC Database ");
 
-        username_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                username_textfieldActionPerformed(evt);
-            }
-        });
         username_textfield.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 username_textfieldKeyPressed(evt);
@@ -71,17 +59,17 @@ public class Welcome extends javax.swing.JFrame {
             }
         });
 
-        Button.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        Button.setForeground(new java.awt.Color(51, 51, 255));
-        Button.setText("Log In ");
-        Button.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 255));
+        jButton1.setText("Log In ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        Button.addKeyListener(new java.awt.event.KeyAdapter() {
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                ButtonKeyPressed(evt);
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -99,7 +87,7 @@ public class Welcome extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 188, Short.MAX_VALUE)
-                                .addComponent(Button))
+                                .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
@@ -126,13 +114,13 @@ public class Welcome extends javax.swing.JFrame {
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
-                .addComponent(Button, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
         username.getAccessibleContext().setAccessibleName("label");
         password.getAccessibleContext().setAccessibleName("jLable3\n");
-        Button.getAccessibleContext().setAccessibleName("button\n");
+        jButton1.getAccessibleContext().setAccessibleName("button\n");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,45 +136,51 @@ public class Welcome extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void username_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_textfieldActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    }//GEN-LAST:event_username_textfieldActionPerformed
+//        String userName = username_textfield.getText();
+//        String ps = PasswordField.getText();
+//
+//        ResultSet resultSet;
+//        try {
+//            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT username FROM users WHERE password='" + ps + "'");
+//            if (resultSet.next()) {
+//                if (userName.equalsIgnoreCase(resultSet.getString("username"))) {                 //remove true when distributing
+//                    this.dispose();
+//                    new MainFrame().setVisible(true);
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Make sure SQL server up and running.", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+//        }
+        this.dispose();
+        new MainFrame().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonActionPerformed
 
-        String userName = username_textfield.getText();
-        String ps = PasswordField.getText().toString();
-
-        if (userName.equals("a") && ps.equals("1")||true) {                 //remove true when distributing
-            dispose();
-            new MainFrame().setVisible(true);
-        } else {
-            dispose();
-            new WelcomeUpdate().setVisible(true);
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
         }
-    }//GEN-LAST:event_ButtonActionPerformed
-
-    private void enter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_enter
-        //if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        //    Button.doClick();
-        //}
-    }//GEN-LAST:event_enter
-
-    private void ButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ButtonKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
-            Button.doClick();
-    }//GEN-LAST:event_ButtonKeyPressed
+    }//GEN-LAST:event_jButton1KeyPressed
 
     private void username_textfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username_textfieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
-            Button.doClick();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
+        }
     }//GEN-LAST:event_username_textfieldKeyPressed
 
     private void PasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) 
-            Button.doClick();
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
+        }
     }//GEN-LAST:event_PasswordFieldKeyPressed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -199,13 +193,7 @@ public class Welcome extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Welcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Welcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Welcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Welcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -219,8 +207,8 @@ public class Welcome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Button;
     private javax.swing.JPasswordField PasswordField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel password;

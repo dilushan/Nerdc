@@ -1,6 +1,5 @@
 package coded.others;
 
-import coded.others.MySQLConnectionClass;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,6 +30,12 @@ public class ExcelClass {
     }
 }
 */
+
+
+/**
+ *
+ * @author Dilushan
+ */
 public class ExcelClass {
 
     public void export(String database, String output) {

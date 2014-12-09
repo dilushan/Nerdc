@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ Create a new table for each new project and include the person to it
+ And able to modify them later (modfy employees in project).
  */
 package coded.frames;
 
@@ -20,6 +19,8 @@ import net.proteanit.sql.DbUtils;
 public class Add_Employees_to_Project extends javax.swing.JFrame {
 
     String projectName, department;
+    private int numEmployee;
+    private double avgIntensive;
 
     /**
      * Creates new form Fill_data
@@ -32,6 +33,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         this.department = departmeent;
 
         initComponents();
+        setLocation(200, 100);
         sql_to_table("nerdc");//the db name has to be given
 
     }
@@ -43,10 +45,12 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
      */
     public final void sql_to_table(String database) {
 
-        setTable1(database, jTable1, "employee_data");
-        setTable2(database, jTable2, projectName + "_" + department);//show table 2 if it is already existing in the database
+        setTable1(database, jTable1, "employee");
+        setTable2(jTable2, projectName + "_" + department);//show table 2 if it is already existing in the database
+        setProfit(); //set Profit
     }
 
+    //right hand side table
     private void setTable1(String database, JTable jTable, String existing_table) {
 
         ResultSet resultSet;
@@ -60,32 +64,39 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         }
     }
 
-    private void setTable2(String database, JTable jTable, String existing_table) {
+    //left hand side table
+    private void setTable2(JTable jTable, String existing_table) {
 
         ResultSet resultSet;
         DefaultTableModel mod = (DefaultTableModel) jTable.getModel();//get the existing table data
-        
-        try {
 
-            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT emp_code,name,direct_indirect FROM "
-                    + "" + existing_table + " ORDER BY emp_code");
+        try {
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT emp_id, name, direct_indirect FROM " + existing_table + " ORDER BY emp_id");
             jTable2.setModel(DbUtils.resultSetToTableModel(resultSet));
             JOptionPane.showMessageDialog(rootPane, "\t Project already exists!\nYou will Navigate to the Manage Employee window");
-            //this.dispose();
-            /* 
-             this is not disposing
-             */
-           
-            
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "New database created!\n \t no existing in the same name");
+            JOptionPane.showMessageDialog(rootPane, "New database will be created!\n \t no existing in the same name");
+        }
+    }
+
+    private void setProfit() {
+        ResultSet resultSet;
+
+        try {
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT profit FROM projects WHERE name='" + projectName + "'");
+            resultSet.next();
+            jTextField1.setText(resultSet.getString("profit"));
+        } catch (SQLException ex) {
+            //ex.printStackTrace();
+            jTextField1.setText("Enter Profit");
         }
     }
 
     /**
      * ********* export table2 to NEW SQL DB ***************
      */
-    private void table_to_SQL(String database) {
+    private void table_to_SQL() {
 
         ResultSet resultSet;
         String s[] = new String[3];//for hold the data in sql row
@@ -95,12 +106,13 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
 
         try {
             query = "CREATE TABLE IF NOT EXISTS " + newTableName + ""
-                    + "(" + "emp_code varchar(10)," + "name varchar(30)," + "direct_indirect varchar(10)" + ")";
+                    + "(" + "emp_id varchar(10)," + "name varchar(30)," + "direct_indirect varchar(10)" + ")";
 
-           MySQLConnectionClass.getInstance().updateStatement(query);//creating table in db
+            MySQLConnectionClass.getInstance().updateStatement(query);//creating table in db
             //wipe data
-           MySQLConnectionClass.getInstance().updateStatement("TRUNCATE TABLE " + newTableName);
+            MySQLConnectionClass.getInstance().updateStatement("TRUNCATE TABLE " + newTableName);
 
+            numEmployee = jTable2.getRowCount();
             //for each row in the table
             for (int i = 0; i < jTable2.getRowCount(); i++) {
 
@@ -110,30 +122,68 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
                 s[2] = mod.getValueAt(i, 2).toString();
 
                 //prepare the query by using the values in the table
-                query = "INSERT INTO  " + newTableName + "(emp_code, name ,direct_indirect)" + " VALUES "
-                        + "( '" + s[0] + "','" + s[1] + "','" + s[2] + "')";
+                query = "INSERT INTO  " + newTableName + "(emp_id, name ,direct_indirect)" + " VALUES "+ "( '" + s[0] + "','" + s[1] + "','" + s[2] + "')";
 
                 MySQLConnectionClass.getInstance().updateStatement(query);//update the table in sql named newProjectName
+            }
+
+            //update the employee table with this new columns
+            //when modyfying existing project below entries give errors. So try catch blok added
+            try {
+                query = "ALTER TABLE employee ADD " + projectName + "_direct VARCHAR(63), ADD " + projectName + "_indirect VARCHAR(63), ADD " + projectName + "_management VARCHAR(63), ADD " + projectName + "_research VARCHAR(63), ADD " + projectName + "_pool VARCHAR(63) ";
+                MySQLConnectionClass.getInstance().updateStatement(query);
+//                
+            } catch (SQLException e) {
 
             }
+
             //show the parent frame
             this.dispose();
-            new Create_Project().setVisible(true);
+            new Add_Project().setVisible(true);
             JOptionPane.showMessageDialog(null, "All the Employees in the table are added Succefully");
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
         }
+        avgIntensive = Double.parseDouble(jTextField1.getText())*0.9 / numEmployee;
 
+        try {
+            MySQLConnectionClass.getInstance().updateStatement("UPDATE employee SET " + projectName + "_direct = NULL, " + projectName + "_indirect = NULL");
+            for (int i = 0; i < jTable2.getRowCount(); i++) {
+
+                s[0] = mod.getValueAt(i, 0).toString();        //get the rows data
+                s[1] = mod.getValueAt(i, 2).toString();
+                //update employee intensive with average value
+                if (s[1].equalsIgnoreCase("direct")) {
+                    query = "UPDATE employee SET " + projectName + "_direct = " + Double.toString(avgIntensive) + " WHERE eid=" + s[0];
+                } else {
+                    query = "UPDATE employee SET " + projectName + "_indirect = " + Double.toString(avgIntensive) + " WHERE eid=" + s[0];
+                }
+                MySQLConnectionClass.getInstance().updateStatement(query);
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void profit_to_SQL() {
+
+        try {
+            MySQLConnectionClass.getInstance().updateStatement("CREATE TABLE IF NOT EXISTS projects (project_id INT NOT NULL AUTO_INCREMENT, name varchar(30), profit DOUBLE, PRIMARY KEY (project_id), UNIQUE(name))");//creating projects table in db
+            MySQLConnectionClass.getInstance().updateStatement("INSERT INTO  projects (name, profit) VALUES ('" + projectName + "'," + jTextField1.getText() + ") ON DUPLICATE KEY UPDATE profit = " + jTextField1.getText());
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
-     * ***************** SQL part ends her
-     *
-     * @return e*******************
+     * ***************** SQL part ends here
      */
     public String getProjectName() {
-        //this is title in the frame
+        //this is title in the frame`
         return "New Project : " + (this.projectName + "_" + this.department).toUpperCase();
     }
 
@@ -160,12 +210,14 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(getProjectName());
         setBackground(java.awt.Color.gray);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setLocationByPlatform(true);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -242,6 +294,16 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Profit      : ");
+
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+        });
+
+        jLabel8.setText("Rs");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -272,19 +334,26 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel6)
-                                .addGap(34, 34, 34)
-                                .addComponent(jRadioButton1)
-                                .addGap(79, 79, 79)
-                                .addComponent(jRadioButton2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(jLabel6)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jRadioButton1)
+                                        .addGap(79, 79, 79)
+                                        .addComponent(jRadioButton2)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -310,7 +379,11 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(9, 9, 9))
         );
 
@@ -366,8 +439,27 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
      * ************
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        table_to_SQL("nerdc");
+        if (isNumeric(jTextField1.getText())) {
+            profit_to_SQL();
+            table_to_SQL();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a valid input to profit field", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+       jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -408,12 +500,15 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
 }
