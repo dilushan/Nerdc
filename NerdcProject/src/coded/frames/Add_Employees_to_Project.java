@@ -75,8 +75,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
             /* 
              this is not disposing
              */
-            new intermediate(projectName, department).setVisible(true);
-            
+           
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "New database created!\n \t no existing in the same name");
