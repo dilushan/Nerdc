@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author sira
+ * @author sira __
  */
 public class MainFrame extends javax.swing.JFrame {
 
