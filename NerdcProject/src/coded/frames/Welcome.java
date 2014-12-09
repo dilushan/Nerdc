@@ -5,13 +5,9 @@
  */
 package coded.frames;
 
-import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,8 +16,9 @@ import javax.swing.JOptionPane;
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
+       // setContentPane(new JLabel(new ImageIcon("Welcome.jpg")));
+        setUndecorated(true);
         initComponents();
-        //setContentPane(new JLabel(new ImageIcon("password.jpg")));
         setLocationRelativeTo(null);
     }
 
@@ -39,6 +36,7 @@ public class Welcome extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome NERDC");
         setLocationByPlatform(true);
+        
         jLabel1.setBackground(new java.awt.Color(255, 255, 153));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
