@@ -629,6 +629,7 @@ public class projectFinancialManagement extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         p1.setProjectNo(jTextField1.getText());
+        
         p1.setProjectName(jTextField23.getText());
         p1.setDepartment(jTextField24.getText());
                 p1.setStartingDate(jTextField25.getText());
