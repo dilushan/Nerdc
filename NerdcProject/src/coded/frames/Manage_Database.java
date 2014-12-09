@@ -17,6 +17,7 @@ public class Manage_Database extends javax.swing.JFrame {
      * Creates new form Manage_Database
      */
     public Manage_Database() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 
