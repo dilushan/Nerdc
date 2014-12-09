@@ -5,11 +5,9 @@
  */
 package coded.frames;
 
-import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,6 +16,7 @@ import javax.swing.JOptionPane;
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
+        setContentPane(new JLabel(new ImageIcon("Nedrc.jpg")));
         initComponents();
         setLocationRelativeTo(null);
     }
