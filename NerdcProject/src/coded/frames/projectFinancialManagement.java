@@ -6,6 +6,8 @@
 package coded.frames;
 
 import coded.others.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
