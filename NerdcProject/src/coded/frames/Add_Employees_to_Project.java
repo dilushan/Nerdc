@@ -7,6 +7,8 @@ package coded.frames;
 import coded.others.MySQLConnectionClass;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -32,9 +34,10 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
     public Add_Employees_to_Project(String projectName, String departmeent) {
         this.projectName = projectName;
         this.department = departmeent;
-
+        
+        setContentPane(new JLabel(new ImageIcon("add emp.jpg")));
         initComponents();
-        setLocation(200, 100);
+        setLocationRelativeTo(null);
         sql_to_table("nerdc");//the db name has to be given
 
     }
@@ -261,12 +264,12 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(21, 129, 129));
+        jLabel1.setForeground(new java.awt.Color(0, 0, 102));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Emploees to be Add");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(21, 129, 129));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 102));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Employees Added/ Existing");
 
@@ -282,7 +285,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         jRadioButton2.setText("Indirect");
 
         jLabel6.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(21, 129, 129));
+        jLabel6.setForeground(new java.awt.Color(0, 0, 102));
         jLabel6.setText("Add As");
 
         jButton1.setBackground(new java.awt.Color(21, 129, 129));
@@ -323,14 +326,12 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(160, 160, 160)
                                 .addComponent(jLabel4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(168, 168, 168)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(109, 109, 109))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
