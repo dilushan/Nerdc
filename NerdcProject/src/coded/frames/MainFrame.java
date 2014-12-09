@@ -22,7 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
-        setContentPane(new JLabel(new ImageIcon("nedrc.jpg")));
+        setContentPane(new JLabel(new ImageIcon("./images/nedrc.jpg")));
         initComponents();
         setLocationRelativeTo(null);
         //setResizable(false);

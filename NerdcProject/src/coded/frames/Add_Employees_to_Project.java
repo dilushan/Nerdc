@@ -35,7 +35,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         this.projectName = projectName;
         this.department = departmeent;
         
-        setContentPane(new JLabel(new ImageIcon("add emp.jpg")));
+        setContentPane(new JLabel(new ImageIcon("./images/add emp.jpg")));
         initComponents();
         setLocationRelativeTo(null);
         sql_to_table("nerdc");//the db name has to be given

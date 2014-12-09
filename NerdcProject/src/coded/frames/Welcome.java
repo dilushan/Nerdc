@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 public class Welcome extends javax.swing.JFrame {
     
     public Welcome() {
-        // setContentPane(new JLabel(new ImageIcon("Welcome.jpg")));
+         //setContentPane(new JLabel(new ImageIcon("./images/Welcome.jpg")));
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
