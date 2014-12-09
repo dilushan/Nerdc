@@ -5,9 +5,11 @@
  */
 package coded.frames;
 
+import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,26 +151,26 @@ public class Welcome extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-//        String userName = username_textfield.getText();
-//        String ps = PasswordField.getText();
-//
-//        ResultSet resultSet;
-//        try {
-//            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT username FROM users WHERE password='" + ps + "'");
-//            if (resultSet.next()) {
-//                if (userName.equalsIgnoreCase(resultSet.getString("username"))) {                 //remove true when distributing
-//                    this.dispose();
-//                    new MainFrame().setVisible(true);
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Make sure SQL server up and running.", "Fatal Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        String userName = username_textfield.getText();
+        String ps = PasswordField.getText();
+
+        ResultSet resultSet;
+        try {
+            resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT username FROM users WHERE password='" + ps + "'");
+            if (resultSet.next()) {
+                if (userName.equalsIgnoreCase(resultSet.getString("username"))) {                 //remove true when distributing
+                    this.dispose();
+                    new MainFrame().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect username password combination", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Make sure SQL server up and running.", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+        }
         this.dispose();
         new MainFrame().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
