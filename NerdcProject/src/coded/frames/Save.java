@@ -17,6 +17,7 @@ public class Save extends javax.swing.JFrame {
      */
     public Save() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

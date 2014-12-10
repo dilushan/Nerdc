@@ -17,6 +17,7 @@ public class inputProfit extends javax.swing.JFrame {
      */
     public inputProfit() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

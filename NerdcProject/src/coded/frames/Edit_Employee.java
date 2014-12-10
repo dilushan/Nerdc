@@ -22,6 +22,7 @@ public class Edit_Employee extends javax.swing.JFrame {
      */
     public Edit_Employee() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

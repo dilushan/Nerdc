@@ -6,6 +6,7 @@ public class Add_Project extends javax.swing.JFrame {
 
     public Add_Project() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")

@@ -21,6 +21,7 @@ public class Delete_Employee extends javax.swing.JFrame {
      */
     public Delete_Employee() {
         initComponents();
+        setLocationRelativeTo(null);
         String[] name=new String[255];
         int i=0;
         try {

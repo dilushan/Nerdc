@@ -41,6 +41,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         sql_to_table("nerdc");//the db name has to be given
+        setLocationRelativeTo(null);
 
     }
 

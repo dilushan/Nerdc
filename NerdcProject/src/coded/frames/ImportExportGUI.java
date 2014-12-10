@@ -22,6 +22,7 @@ public class ImportExportGUI extends javax.swing.JFrame {
      */
     public ImportExportGUI() {
         initComponents();
+        setLocationRelativeTo(null);
         jFileChooser1.setFileFilter(new FileNameExtensionFilter("Excel workbook", "xlsx"));     //pass a filename extension filter object
         jFileChooser2.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -205,6 +206,8 @@ public class ImportExportGUI extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Export");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

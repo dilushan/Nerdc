@@ -17,6 +17,7 @@ public class About_NERDC extends javax.swing.JFrame {
      */
     public About_NERDC() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

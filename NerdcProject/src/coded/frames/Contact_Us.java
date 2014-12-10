@@ -17,6 +17,7 @@ public class Contact_Us extends javax.swing.JFrame {
      */
     public Contact_Us() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

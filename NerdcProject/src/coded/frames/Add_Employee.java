@@ -21,6 +21,7 @@ public class Add_Employee extends javax.swing.JFrame {
      */
     public Add_Employee() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
