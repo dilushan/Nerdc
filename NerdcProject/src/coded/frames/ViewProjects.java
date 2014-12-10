@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -18,7 +19,8 @@ import java.util.logging.Logger;
 public class ViewProjects extends javax.swing.JFrame {
 
     ResultSet resultSet;
-
+    DefaultListModel defaultModel = new DefaultListModel();
+        
     /**
      * Creates new form ViewProjects
      *
@@ -28,7 +30,7 @@ public class ViewProjects extends javax.swing.JFrame {
         initComponents();
         resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT name FROM projects ");
         while (resultSet.next()) {
-            //jList1.setText(jTextArea1.getText() + resultSet.getString("name") + "\n");
+            defaultModel.addElement(resultSet.getString("name") );
         }
     }
 
@@ -47,7 +49,7 @@ public class ViewProjects extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Project List");
 
         jButton1.setText("Edit");
@@ -61,6 +63,7 @@ public class ViewProjects extends javax.swing.JFrame {
             }
         });
 
+        jList1.setModel(defaultModel );
         jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
