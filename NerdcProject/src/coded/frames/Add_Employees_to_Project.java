@@ -145,7 +145,7 @@ public class Add_Employees_to_Project extends javax.swing.JFrame {
 
             //show the parent frame
             this.dispose();
-            new Add_Project().setVisible(true);
+            //new Add_Project().setVisible(true);
             JOptionPane.showMessageDialog(null, "All the Employees in the table are added Succefully");
 
         } catch (SQLException ex) {

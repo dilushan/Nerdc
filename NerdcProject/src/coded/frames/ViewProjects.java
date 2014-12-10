@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+///Delete every table regardless department    check below and find and correct
 package coded.frames;
 
 import coded.others.MySQLConnectionClass;
@@ -64,6 +65,11 @@ public class ViewProjects extends javax.swing.JFrame {
         });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Save as Excel");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -136,6 +142,32 @@ public class ViewProjects extends javax.swing.JFrame {
             jButton1.doClick();
         }
     }//GEN-LAST:event_jList1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int result;
+        if (selection != null) {
+            result = JOptionPane.showConfirmDialog(null, "Are u sure u want to delete this project?. There is no turning back", "Warning", JOptionPane.YES_NO_OPTION);
+            if (result == 0) {
+                try {
+                    ///Delete every table regardless department
+                    try {
+                        MySQLConnectionClass.getInstance().updateStatement("DROP TABLE `" + selection + "_aph`, `" + selection + "_civil`,`" + selection + "_electrical`,`" + selection + "_emc`,`" + selection + "_red`");
+                    } catch (SQLException ex) {
+                        //This empty try catch block for handle the exception throws when above tables not present. Only one table present. Because of other 4 not present exception throws
+                    }
+                    MySQLConnectionClass.getInstance().updateStatement("DELETE FROM `nerdc`.`projects` WHERE `projects`.`name` = '" + selection + "'");
+                    MySQLConnectionClass.getInstance().updateStatement("ALTER TABLE employee DROP " + selection + "_direct, DROP " + selection + "_indirect, DROP " + selection + "_management, DROP " + selection + "_research, DROP " + selection + "_pool");
+                    defaultModel = new DefaultListModel();
+                    dispose();
+                    new ViewProjects().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ViewProjects.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a project", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
