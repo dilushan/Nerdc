@@ -12,20 +12,36 @@ import java.util.Iterator;
  *
  * @author Shehan
  */
-class DirectProjectStaff {
+public class DirectProjectStaff {
 
     ArrayList<Employee> list = new ArrayList<Employee>();
     private double sumweight;
     private double precentage;
     private Employee ele;
-
-    public void calcIntensive(double profit) {
+    private double profit;
+    public void calcIntensive() {
         double unitVal = (profit * precentage) / (this.getSumweight() * 100);
         Iterator<Employee> it = list.iterator();
         while (it.hasNext()) {
             ele = it.next();
             ele.Addincentive(ele.getWeight() * unitVal);
         }
+    }
+
+    public Employee getEle() {
+        return ele;
+    }
+
+    public void setEle(Employee ele) {
+        this.ele = ele;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
     }
 
     public ArrayList<Employee> getList() {

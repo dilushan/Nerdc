@@ -6,6 +6,8 @@
 package coded.frames;
 
 import coded.others.*;
+
+import coded.frames.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -18,12 +20,10 @@ public class projectFinancialManagement extends javax.swing.JFrame {
     /**
      * Creates new form projectFinancialManagement
      */
-    Project p1;
-
     public projectFinancialManagement() {
         initComponents();
         setLocationRelativeTo(null);
-        p1 = new Project();
+
     }
 
     /**
@@ -630,13 +630,45 @@ public class projectFinancialManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField25ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        p1.setProjectNo(jTextField1.getText());
         
-        p1.setProjectName(jTextField23.getText());
-        p1.setDepartment(jTextField24.getText());
-                p1.setStartingDate(jTextField25.getText());
-        p1.setCompletionDate(jTextField2.getText());
-               // p1.setPincome(jTextField1.getText());
+        MainFrame.p1.setProjectNo(jTextField1.getText());
+
+        MainFrame.p1.setProjectName(jTextField23.getText());
+        MainFrame.p1.setDepartment(jTextField24.getText());
+        MainFrame.p1.setStartingDate(jTextField25.getText());
+        MainFrame.p1.setCompletionDate(jTextField2.getText());
+        MainFrame.p1.getPincome().setDueAmount(Double.parseDouble(jTextField6.getText()));
+        MainFrame.p1.getPincome().setExpectedIncome(Double.parseDouble(jTextField3.getText()));
+        MainFrame.p1.getPincome().setInvoiceIncome(Double.parseDouble(jTextField4.getText()));
+        MainFrame.p1.getPincome().setReceivedAmount(Double.parseDouble(jTextField5.getText()));
+        MainFrame.p1.getDcost().setMaterialOthers(Double.parseDouble(jTextField7.getText()));
+        MainFrame.p1.getDcost().setOT(Double.parseDouble(jTextField8.getText()));
+        MainFrame.p1.getDcost().setTransport(Double.parseDouble(jTextField10.getText()));
+        MainFrame.p1.getDcost().setTravellingSubsistence(Double.parseDouble(jTextField9.getText()));
+        MainFrame.p1.getIcost().setLabour(Double.parseDouble(jTextField11.getText()));
+        MainFrame.p1.getIcost().setOthers(Double.parseDouble(jTextField14.getText()));
+        MainFrame.p1.getIcost().setOverhead(Double.parseDouble(jTextField12.getText()));
+        MainFrame.p1.getIcost().setRecoveries(Double.parseDouble(jTextField13.getText()));
+        MainFrame.p1.setProfit(MainFrame.p1.getPincome().calcResult() - (MainFrame.p1.getDcost().getDcost() + MainFrame.p1.getIcost().getIcost()));
+        MainFrame.p1.setSharedPresentage(Double.parseDouble(jTextField15.getText()));
+        MainFrame.p1.setSharedIncentive(MainFrame.p1.getProfit() * MainFrame.p1.getSharedPresentage() / 100);
+        MainFrame.p1.getDstaff().setProfit(MainFrame.p1.getSharedIncentive());
+        MainFrame.p1.getDstaff().setPrecentage(Double.parseDouble(jTextField16.getText()));
+        MainFrame.p1.getInstaff().setProfit(MainFrame.p1.getSharedIncentive());
+        MainFrame.p1.getInstaff().setPrecentage(Double.parseDouble(jTextField17.getText()));
+        MainFrame.p1.getOtherstaff().setProfit(MainFrame.p1.getSharedIncentive());
+        MainFrame.p1.getOtherstaff().setPrecentage(Double.parseDouble(jTextField18.getText()));
+        MainFrame.p1.getPool().setProfit(MainFrame.p1.getSharedIncentive());
+        MainFrame.p1.getPool().setPrecentage(Double.parseDouble(jTextField20.getText()));
+        MainFrame.p1.getRepool().setProfit(MainFrame.p1.getSharedIncentive());
+        MainFrame.p1.getRepool().setPrecentage(Double.parseDouble(jTextField19.getText()));
+        MainFrame.p1.setProjectNo(jTextField1.getText());
+
+        MainFrame.p1.setProjectName(jTextField23.getText());
+        MainFrame.p1.setDepartment(jTextField24.getText());
+        MainFrame.p1.setStartingDate(jTextField25.getText());
+        MainFrame.p1.setCompletionDate(jTextField2.getText());
+        // p1.setPincome(jTextField1.getText());
 
 
 
@@ -676,7 +708,6 @@ public class projectFinancialManagement extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

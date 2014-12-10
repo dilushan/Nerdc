@@ -11,7 +11,7 @@ package coded.others;
  * @author Shehan
  */
 
-class DirectCost{
+public class DirectCost{
   private double  MaterialOthers;
   private double  OT;
   private double  TravellingSubsistence;

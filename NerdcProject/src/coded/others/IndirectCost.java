@@ -11,7 +11,7 @@ package coded.others;
  * @author Shehan
  */
 
-class IndirectCost{
+public class IndirectCost{
   private double Labour;
   private double Overhead;
   private double Recoveries;
