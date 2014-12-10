@@ -134,6 +134,8 @@ public class ImportExportGUI extends javax.swing.JFrame {
             }
         });
 
+        jTextField3.setText("nerdc");
+
         jLabel1.setText("Database name");
 
         jLabel3.setText("Select the directory to export");

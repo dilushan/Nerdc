@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,7 +22,8 @@ public class ViewProjects extends javax.swing.JFrame {
 
     ResultSet resultSet;
     DefaultListModel defaultModel = new DefaultListModel();
-        
+    String selection;
+
     /**
      * Creates new form ViewProjects
      *
@@ -31,7 +34,7 @@ public class ViewProjects extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         resultSet = MySQLConnectionClass.getInstance().queryStatement("SELECT name FROM projects ");
         while (resultSet.next()) {
-            defaultModel.addElement(resultSet.getString("name") );
+            defaultModel.addElement(resultSet.getString("name"));
         }
     }
 
@@ -54,6 +57,11 @@ public class ViewProjects extends javax.swing.JFrame {
         setTitle("Project List");
 
         jButton1.setText("Edit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
 
@@ -65,6 +73,11 @@ public class ViewProjects extends javax.swing.JFrame {
         });
 
         jList1.setModel(defaultModel );
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -101,9 +114,28 @@ public class ViewProjects extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        dispose();;
+        dispose();
         new ImportExportGUI().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (selection != null) {
+            dispose();
+            new Add_Project(selection).jButton1.doClick();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a project", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+        JList list = (JList) evt.getSource();
+        if (evt.getClickCount() == 1) {
+            selection = (String) list.getSelectedValue();
+        } else if (evt.getClickCount() == 2) {   // Double-click
+            selection = (String) list.getSelectedValue();
+            jButton1.doClick();
+        }
+    }//GEN-LAST:event_jList1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -121,13 +153,7 @@ public class ViewProjects extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ViewProjects.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

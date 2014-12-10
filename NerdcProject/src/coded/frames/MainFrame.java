@@ -247,7 +247,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void button_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_createActionPerformed
         new Add_Project().setVisible(true);
-        // TODO add your handling code here:
     }//GEN-LAST:event_button_createActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed

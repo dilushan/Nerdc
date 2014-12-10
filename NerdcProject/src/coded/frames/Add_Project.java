@@ -8,6 +8,12 @@ public class Add_Project extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    
+    public Add_Project(String projectName) {
+        initComponents();
+        jTextField1.setText(projectName);
+        setLocationRelativeTo(null);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,7 +141,7 @@ public class Add_Project extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

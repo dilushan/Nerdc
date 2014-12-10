@@ -171,8 +171,8 @@ public class Welcome extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Make sure SQL server up and running.", "Fatal Error", JOptionPane.ERROR_MESSAGE);
         }
-        this.dispose();
-        new MainFrame().setVisible(true);
+//        this.dispose();
+//        new MainFrame().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
     
 
