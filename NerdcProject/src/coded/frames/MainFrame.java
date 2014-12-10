@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import coded.others.*;
 
 /**
  *
@@ -21,10 +22,12 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    public static Project p1;
     public MainFrame() {
         setContentPane(new JLabel(new ImageIcon("./images/nedrc.jpg")));
         initComponents();
         setLocationRelativeTo(null);
+        p1 = new Project();
         //setResizable(false);
     }
 

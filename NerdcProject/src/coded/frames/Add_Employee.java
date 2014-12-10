@@ -5,7 +5,6 @@
  */
 package coded.frames;
 
-
 import coded.others.MySQLConnectionClass;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;

@@ -22,7 +22,7 @@ public class Employee {
     private double weight;
     private double salary;
 
-    public Employee(String name, String EmployeeId, double BasicSalary, String Catagery, String Designation, String Department, float weight) {
+    public Employee(String name, String EmployeeId, double BasicSalary, String Catagery, String Designation, String Department, Double weight) {
         this.name = name;
         this.EmployeeId = EmployeeId;
         this.BasicSalary = BasicSalary;
